@@ -301,33 +301,33 @@ extension KeyPathIterable {
   }
 }
 
-extension KeyPathIterable where Self: Differentiable, Self.TangentVector: KeyPathIterable {
-  // TODO: Differentiable `stack` and `unstacked`.
-
-  @differentiable(wrt: self, vjp: _vjpFlattenedBatch)
-  public func flattenedBatch(outerDimCount: Int) -> Self {
-    var result = self
-    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Float>.self) {
-      result[keyPath: kp] = result[keyPath: kp].flattenedBatch(outerDimCount: outerDimCount)
-    }
-    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Double>.self) {
-      result[keyPath: kp] = result[keyPath: kp].flattenedBatch(outerDimCount: outerDimCount)
-    }
-    return result
-  }
-
-  @differentiable(wrt: self, vjp: _vjpUnflattenedBatch)
-  public func unflattenedBatch(outerDims: [Int]) -> Self {
-    var result = self
-    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Float>.self) {
-      result[keyPath: kp] = result[keyPath: kp].unflattenedBatch(outerDims: outerDims)
-    }
-    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Double>.self) {
-      result[keyPath: kp] = result[keyPath: kp].unflattenedBatch(outerDims: outerDims)
-    }
-    return result
-  }
-}
+//extension KeyPathIterable where Self: Differentiable, Self.TangentVector: KeyPathIterable {
+//  // TODO: Differentiable `stack` and `unstacked`.
+//
+//  @differentiable(wrt: self)
+//  public func flattenedBatch(outerDimCount: Int) -> Self {
+//    var result = self
+//    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Float>.self) {
+//      result[keyPath: kp] = result[keyPath: kp].flattenedBatch(outerDimCount: outerDimCount)
+//    }
+//    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Double>.self) {
+//      result[keyPath: kp] = result[keyPath: kp].flattenedBatch(outerDimCount: outerDimCount)
+//    }
+//    return result
+//  }
+//
+//  @differentiable(wrt: self)
+//  public func unflattenedBatch(outerDims: [Int]) -> Self {
+//    var result = self
+//    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Float>.self) {
+//      result[keyPath: kp] = result[keyPath: kp].unflattenedBatch(outerDims: outerDims)
+//    }
+//    for kp in result.recursivelyAllWritableKeyPaths(to: Tensor<Double>.self) {
+//      result[keyPath: kp] = result[keyPath: kp].unflattenedBatch(outerDims: outerDims)
+//    }
+//    return result
+//  }
+//}
 
 internal extension KeyPathIterable
 where Self: Differentiable, Self.TangentVector: KeyPathIterable {
